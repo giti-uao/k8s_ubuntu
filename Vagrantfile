@@ -14,14 +14,14 @@ Vagrant.configure(2) do |config|
     kmaster.vm.network "private_network", ip: "172.42.42.100"
     kmaster.vm.provider "virtualbox" do |v|
       v.name = "kmaster"
-      v.memory = 3072
+      v.memory = 1024
       v.cpus = 2
     end
     kmaster.vm.provision "shell", path: "bootstrap_kmaster.sh"
     kmaster.vm.box_download_insecure = true
   end
 
-  NodeCount = 1
+  NodeCount = 2
 
   # Kubernetes Worker Nodes
   (1..NodeCount).each do |i|
@@ -31,7 +31,7 @@ Vagrant.configure(2) do |config|
       workernode.vm.network "private_network", ip: "172.42.42.10#{i}"
       workernode.vm.provider "virtualbox" do |v|
         v.name = "kworker#{i}"
-        v.memory = 3072
+        v.memory = 1024
         v.cpus = 1
       end
       workernode.vm.provision "shell", path: "bootstrap_kworker.sh"
